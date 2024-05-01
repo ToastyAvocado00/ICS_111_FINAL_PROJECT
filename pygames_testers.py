@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 
-# Define colors
+
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -19,20 +19,18 @@ SCREEN_HEIGHT = BLOCK_SIZE * MAZE_HEIGHT
 TIMER_DURATION = 240000  
 timer_start = 0
 
-# Initialize Pygame
+
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Maze Game")
 
-# Load background image
+
 background_image = pygame.image.load("Candy_Kingdom.jpg").convert()
 
-# Initialize exit position
 exit_x = None
 exit_y = None
 
 
-# Generate maze using recursive backtracking algorithm
 def generate_maze():
     global exit_x, exit_y
     maze = [[1] * MAZE_WIDTH for _ in range(MAZE_HEIGHT)]
@@ -49,10 +47,10 @@ def generate_maze():
                 create_path(nx, ny)
 
     create_path(1, 1)
-    # Set exit area far away from the start
+  
     exit_x = random.randint(MAZE_WIDTH // 2, MAZE_WIDTH - 1)
     exit_y = random.randint(MAZE_HEIGHT // 2, MAZE_HEIGHT - 1)
     while maze[exit_y][exit_x] != 0:
         exit_x = random.randint(MAZE_WIDTH // 2, MAZE_WIDTH - 1)
         exit_y = random.randint(MAZE_HEIGHT // 2, MAZE_HEIGHT - 1)
-    maze[exit_y][exit_x] = 0  # Set exit area
+    maze[exit_y][exit_x] = 0
