@@ -33,6 +33,3 @@ def display_images():
 def draw_circles():
     for pos in clicked_positions:
         pygame.draw.circle(screen, (255, 0, 0), pos, 10, 2)
-
-
-
