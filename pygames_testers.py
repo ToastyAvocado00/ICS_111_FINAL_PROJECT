@@ -13,7 +13,7 @@ BLOCK_SIZE = 15
 SCREEN_WIDTH = BLOCK_SIZE * MAZE_WIDTH
 SCREEN_HEIGHT = BLOCK_SIZE * MAZE_HEIGHT
 
-TIMER_DURATION = 30000
+TIMER_DURATION = 120000
 timer_start = 0
 
 pygame.init()
@@ -57,8 +57,8 @@ def draw_maze(maze):
         for x in range(MAZE_WIDTH):
             if maze[y][x] == 1:
                 pygame.draw.rect(screen, BLACK, (
-                    x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1))  # Draw thinner black lines
-            elif maze[y][x] == 0 and x == exit_x and y == exit_y:  # Draw exit position
+                    x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            elif maze[y][x] == 0 and x == exit_x and y == exit_y:
                 pygame.draw.rect(screen, GREEN, (x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
 
 
@@ -72,7 +72,9 @@ def main():
     global timer_start
     maze = generate_maze()
     player_pos = [1, 1]
-    timer_start = pygame.time.get_ticks()  # Start the timer
+    timer_start = pygame.time.get_ticks()
+
+    font = pygame.font.Font(None, 24)
 
     while True:
         for event in pygame.event.get():
@@ -97,10 +99,18 @@ def main():
         draw_maze(maze)
         draw_player(player_pos)
 
+        # Draw timer
+        time_left = max(0, TIMER_DURATION - (pygame.time.get_ticks() - timer_start))
+        timer_text = font.render("Time left: {:.1f} seconds".format(time_left / 1000), True, WHITE)
+        screen.blit(timer_text, (10, 10))
+
+        controls_text = font.render("Controls: Arrow keys to move", True, WHITE)
+        screen.blit(controls_text, (10, SCREEN_HEIGHT - 30))
+
         if is_game_over():
-            font = pygame.font.Font(None, 36)
-            text = font.render("Game Over!", True, RED)
-            screen.blit(text, (SCREEN_WIDTH // 2 - text.get_width() // 2, SCREEN_HEIGHT // 2 - text.get_height() // 2))
+            game_over_text = font.render("Game Over!", True, RED)
+            screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2,
+                                         SCREEN_HEIGHT // 2 - game_over_text.get_height() // 2))
             pygame.display.flip()
             pygame.time.delay(2000)
             pygame.quit()
