@@ -39,4 +39,20 @@ class Star:
         self.y = SCREEN_HEIGHT // 2
         self.speed = STAR_SPEED
 
+        def update(self, keys):
+            if keys[pygame.K_LEFT]:
+                self.x -= self.speed
+            if keys[pygame.K_RIGHT]:
+                self.x += self.speed
+            if keys[pygame.K_UP]:
+                self.y -= self.speed
+            if keys[pygame.K_DOWN]:
+                self.y += self.speed
+
+        def draw(self):
+            pygame.draw.circle(screen, YELLOW, (int(self.x), int(self.y)), STAR_RADIUS)
+
+
+
+
 
